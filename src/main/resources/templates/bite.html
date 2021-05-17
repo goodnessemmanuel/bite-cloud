@@ -7,8 +7,11 @@
 <body>
     <h1>Design your bite</h1>
     <img th:src="@{/images/easy-bite.png}"/>
-    <form method="POST" th:object="${design}">
+    <form method="POST" th:object="${bite}">
         <div class="grid">
+            <span class="validationError"
+                  th:if="${#fields.hasErrors()}"
+                  >You must select at least one ingredient</span>
             <div class="ingredient-group" id="wraps">
                 <h3>Designate your wrap:</h3>
                 <div th:each="ingredient : ${wrap}">
@@ -19,18 +22,18 @@
             <div class="ingredient-group" id="protein">
                 <h3>Pick your protein:</h3>
                 <div th:each="ingredient :  ${protein}">
-                    <input name="ingredients" type="checkbox" th:value="${ingredient.id}" />
+                    <input  name="ingredients" type="checkbox" th:value="${ingredient.id}" />
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
-            <div class="ingredient-group" id="protein">
+            <div class="ingredient-group" id="cheese">
                 <h3>Choose your cheese:</h3>
                 <div th:each="ingredient : ${cheese}">
-                    <input name="ingredients" type="checkbox" th:value="${ingredient.id}" />
+                    <input  name="ingredients" type="checkbox" th:value="${ingredient.id}" />
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
-            <div class="ingredient-group" id="protein">
+            <div class="ingredient-group" id="veggies">
                 <h3>Determine your veggies:</h3>
                 <div th:each="ingredient : ${veggies}">
                     <input name="ingredients" type="checkbox" th:value="${ingredient.id}" />
@@ -46,6 +49,10 @@
             </div>
             <h3>Name your bite creation:</h3>
             <input type="text" th:field="*{name}"/>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('name')}"
+                  th:errors="*{name}">
+            </span>
             <br/>
             <button>Submit your bite</button>
         </div>
